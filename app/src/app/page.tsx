@@ -1,12 +1,12 @@
 'use client'
 
-import { WalletProvider } from '@/components/WalletProvider'
+import { WalletContextProvider } from '@/components/WalletProvider'
 import { VaultDashboard } from '@/components/VaultDashboard'
 
 export default function Home() {
   return (
-    <WalletProvider>
-      <main className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+    <WalletContextProvider>
+      <main className="min-h-screen bg-gray-900">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-white mb-4">
@@ -20,7 +20,7 @@ export default function Home() {
           <VaultDashboard />
         </div>
       </main>
-    </WalletProvider>
+    </WalletContextProvider>
   )
 }
 

@@ -16,7 +16,7 @@ export function VaultStats({ vaultData }: VaultStatsProps) {
   }
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-lg p-6">
+    <div className="bg-gray-800 rounded-lg p-6">
       <h3 className="text-xl font-bold text-white mb-4">Vault Statistics</h3>
       
       <div className="space-y-4">

@@ -10,18 +10,27 @@ import {
 import { clusterApiUrl } from '@solana/web3.js'
 
 // Default styles that can be overridden by your app
-require('@solana/wallet-adapter-react-ui/styles.css')
+import '@solana/wallet-adapter-react-ui/styles.css'
 
 interface WalletContextProviderProps {
   children: ReactNode
 }
 
-export const WalletProvider: FC<WalletContextProviderProps> = ({ children }) => {
+export const WalletContextProvider: FC<WalletContextProviderProps> = ({ children }) => {
   // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'
   const network = WalletAdapterNetwork.Devnet
 
   // You can also provide a custom RPC endpoint
-  const endpoint = useMemo(() => clusterApiUrl(network), [network])
+  const endpoint = useMemo(() => {
+    const networkEnv = process.env.NEXT_PUBLIC_SOLANA_NETWORK || 'devnet'
+    if (networkEnv === 'mainnet-beta') {
+      return 'https://api.mainnet-beta.solana.com'
+    } else if (networkEnv === 'testnet') {
+      return 'https://api.testnet.solana.com'
+    } else {
+      return 'https://api.devnet.solana.com'
+    }
+  }, [])
 
   const wallets = useMemo(
     () => [

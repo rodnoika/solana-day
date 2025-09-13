@@ -6,6 +6,19 @@ import { WalletMultiButton, WalletDisconnectButton } from '@solana/wallet-adapte
 import { DepositForm } from './DepositForm'
 import { WithdrawForm } from './WithdrawForm'
 import { VaultStats } from './VaultStats'
+import { InitializeVault } from './InitializeVault'
+import dynamic from 'next/dynamic'
+
+// Dynamically import wallet components to avoid hydration issues
+const WalletMultiButtonDynamic = dynamic(
+  () => import('@solana/wallet-adapter-react-ui').then((mod) => ({ default: mod.WalletMultiButton })),
+  { ssr: false }
+)
+
+const WalletDisconnectButtonDynamic = dynamic(
+  () => import('@solana/wallet-adapter-react-ui').then((mod) => ({ default: mod.WalletDisconnectButton })),
+  { ssr: false }
+)
 
 export function VaultDashboard() {
   const { publicKey, connected } = useWallet()
@@ -22,14 +35,14 @@ export function VaultDashboard() {
   if (!connected) {
     return (
       <div className="max-w-md mx-auto">
-        <div className="bg-white/10 backdrop-blur-lg rounded-lg p-8 text-center">
+        <div className="bg-gray-800 rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold text-white mb-4">
             Connect Your Wallet
           </h2>
           <p className="text-gray-300 mb-6">
             Connect your Solana wallet to start using the DCA Vault
           </p>
-          <WalletMultiButton className="!bg-purple-600 hover:!bg-purple-700" />
+          <WalletMultiButtonDynamic className="!bg-blue-600 hover:!bg-blue-700" />
         </div>
       </div>
     )
@@ -41,10 +54,15 @@ export function VaultDashboard() {
         <h2 className="text-2xl font-bold text-white">
           Welcome to DCA Vault
         </h2>
-        <WalletDisconnectButton className="!bg-red-600 hover:!bg-red-700" />
+        <WalletDisconnectButtonDynamic className="!bg-red-600 hover:!bg-red-700" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Initialize Vault */}
+        <div className="lg:col-span-3">
+          <InitializeVault />
+        </div>
+
         {/* Vault Stats */}
         <div className="lg:col-span-1">
           <VaultStats vaultData={vaultData} />

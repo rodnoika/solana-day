@@ -27,7 +27,7 @@ export function WithdrawForm() {
   }
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-lg p-6">
+    <div className="bg-gray-800 rounded-lg p-6">
       <h3 className="text-xl font-bold text-white mb-4">Withdraw Shares</h3>
       <form onSubmit={handleWithdraw} className="space-y-4">
         <div>
@@ -39,7 +39,7 @@ export function WithdrawForm() {
             value={shares}
             onChange={(e) => setShares(e.target.value)}
             placeholder="Enter shares amount"
-            className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
