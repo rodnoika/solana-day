@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useWallet, useConnection } from '@solana/wallet-adapter-react'
 import { getProgram, getVaultPDA, getSharesMintPDA, USDC_MINT, WSOL_MINT, BN } from '@/lib/anchor'
-import { PublicKey, SystemProgram } from '@solana/web3.js'
+import { PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
 import { getAssociatedTokenAddress, createAssociatedTokenAccountInstruction } from '@solana/spl-token'
 
 export function DepositForm() {

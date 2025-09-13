@@ -13,6 +13,14 @@ const nextConfig = {
         net: false,
         tls: false,
         crypto: false,
+        stream: false,
+        url: false,
+        zlib: false,
+        http: false,
+        https: false,
+        assert: false,
+        os: false,
+        path: false,
       };
     }
     
@@ -24,6 +32,12 @@ const nextConfig = {
       },
     });
 
+    // Ignore pino-pretty warnings
+    config.ignoreWarnings = [
+      /Module not found: Can't resolve 'pino-pretty'/,
+      /Failed to load bindings, pure JS will be used/,
+    ];
+
     return config;
   },
   env: {
@@ -32,6 +46,11 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+  },
+  // Suppress specific warnings
+  onDemandEntries: {
+    maxInactiveAge: 25 * 1000,
+    pagesBufferLength: 2,
   },
 }
 
