@@ -1,0 +1,128 @@
+---
+description: "Generate a minimal Solana DCA Vault (DeFi MVP) for a blockchain hackathon"
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Build a Solana DCA Vault (DeFi MVP)
+
+## 🎯 Goal
+Create a minimal **DeFi DCA Vault** on **Solana (Devnet)** for a hackathon.  
+Users deposit **USDC** → periodically buy target token (like **wSOL**) via **Jupiter** using an off-chain cranker → users receive **shares** (vault token) and can withdraw their proportional share of USDC + target tokens anytime.
+
+This is a **hackathon MVP**, so keep it **simple, clean and working** (not production-hardened).
+
+---
+
+## ⚙️ Requirements
+
+### On-chain (Anchor)
+- Framework: **Anchor**
+- Program name: `dca_vault`
+- Instructions:
+  - `initialize_vault(period_seconds, fee_bps)`
+  - `deposit(usdc_amount)`
+  - `withdraw(shares_amount)`
+  - `execute_dca()` (only updates timestamp; real swap done off-chain)
+- Data:
+  - `Vault` account: admin, usdc_mint, target_mint, shares_mint, period_seconds, next_exec_ts, fee_bps, total_shares
+- Token logic:
+  - Deposit → mint shares
+  - Withdraw → burn shares and send proportional assets
+- Use `anchor_spl::token` (Transfer, MintTo, Burn)
+
+### Off-chain Cranker (Node.js)
+- Every N minutes:
+  - Check `Vault.next_exec_ts`
+  - Call **Jupiter API** to get quote for USDC→wSOL
+  - Perform swap using vault’s USDC account (with delegate/approve)
+  - Call `execute_dca` to update next_exec_ts
+
+### Frontend (Next.js)
+- Stack: Next.js + TypeScript + Tailwind
+- Use `@solana/wallet-adapter` for wallet connection
+- Pages / components:
+  - Connect wallet
+  - Deposit form (enter USDC amount → call `deposit`)
+  - Withdraw form (enter shares → call `withdraw`)
+  - Show:
+    - current share price
+    - vault balances
+    - next execution time
+    - simple history table
+
+### Project Structure
+---
+description: "Generate a minimal Solana DCA Vault (DeFi MVP) for a blockchain hackathon"
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Build a Solana DCA Vault (DeFi MVP)
+
+## 🎯 Goal
+Create a minimal **DeFi DCA Vault** on **Solana (Devnet)** for a hackathon.  
+Users deposit **USDC** → periodically buy target token (like **wSOL**) via **Jupiter** using an off-chain cranker → users receive **shares** (vault token) and can withdraw their proportional share of USDC + target tokens anytime.
+
+This is a **hackathon MVP**, so keep it **simple, clean and working** (not production-hardened).
+
+---
+
+## ⚙️ Requirements
+
+### On-chain (Anchor)
+- Framework: **Anchor**
+- Program name: `dca_vault`
+- Instructions:
+  - `initialize_vault(period_seconds, fee_bps)`
+  - `deposit(usdc_amount)`
+  - `withdraw(shares_amount)`
+  - `execute_dca()` (only updates timestamp; real swap done off-chain)
+- Data:
+  - `Vault` account: admin, usdc_mint, target_mint, shares_mint, period_seconds, next_exec_ts, fee_bps, total_shares
+- Token logic:
+  - Deposit → mint shares
+  - Withdraw → burn shares and send proportional assets
+- Use `anchor_spl::token` (Transfer, MintTo, Burn)
+
+### Off-chain Cranker (Node.js)
+- Every N minutes:
+  - Check `Vault.next_exec_ts`
+  - Call **Jupiter API** to get quote for USDC→wSOL
+  - Perform swap using vault’s USDC account (with delegate/approve)
+  - Call `execute_dca` to update next_exec_ts
+
+### Frontend (Next.js)
+- Stack: Next.js + TypeScript + Tailwind
+- Use `@solana/wallet-adapter` for wallet connection
+- Pages / components:
+  - Connect wallet
+  - Deposit form (enter USDC amount → call `deposit`)
+  - Withdraw form (enter shares → call `withdraw`)
+  - Show:
+    - current share price
+    - vault balances
+    - next execution time
+    - simple history table
+
+### Project Structure
+/programs/dca_vault (Anchor program)
+/app (Next.js frontend)
+/cranker (Node.js script)
+/Anchor.toml
+---
+
+## ✅ Deliverables
+- Fully compilable Anchor project (Devnet)
+- Basic working frontend (connect wallet, deposit, withdraw)
+- Simple cranker script executing swaps
+- README with:
+  - How to build & deploy on Devnet
+  - How to run cranker and frontend locally
+
+---
+
+## ⚡️ Notes
+- Keep logic minimal, just enough for MVP
+- No need for full security, audits or production tokenomics
+- This will be used for a **blockchain hackathon submission** (code + slides + demo video)

@@ -1,0 +1,21 @@
+{
+  "name": "dca-vault-cranker",
+  "version": "1.0.0",
+  "description": "Off-chain DCA execution script for Solana DCA Vault",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.87.6",
+    "@coral-xyz/anchor": "^0.29.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1"
+  },
+  "keywords": ["solana", "defi", "dca", "vault"],
+  "author": "",
+  "license": "MIT"
+}
+
